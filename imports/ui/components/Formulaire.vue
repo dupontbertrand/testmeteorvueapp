@@ -72,7 +72,7 @@
         </div>
       </div>
       <div class="col-3 offset-10 mt-2">
-        <button type="button" class="btn btn-primary btn-lg" v-on:click="step += 1" :disabled="isButtonOneDisabled(form)">Next step</button>
+        <button type="button" class="btn btn-primary btn-lg" v-on:click="step += 1" :disabled="isButtonOneDisabled(form)">Etape suivante</button>
       </div>
     </div>
     <div class="row" id="step_2" v-if="step == 2">
@@ -152,10 +152,10 @@
         </div>
       </div>
       <div class="col-2 mt-2">
-        <button type="button" class="btn btn-primary btn-lg" v-on:click="step -= 1" >Previous step</button>
+        <button type="button" class="btn btn-primary btn-lg" v-on:click="step -= 1" >Etape précédente</button>
       </div>
       <div class="col-2 offset-8 mt-2">
-        <button type="button" class="btn btn-primary btn-lg" v-on:click="step += 1" :disabled="isButtonTwoDisabled(form)">Next step</button>
+        <button type="button" class="btn btn-primary btn-lg" v-on:click="step += 1" :disabled="isButtonTwoDisabled(form)">Etape suivante</button>
       </div>
     </div>
     <div class="row" id="step_3" v-if="step == 3">
@@ -166,7 +166,7 @@
         <button type="button" class="button btn-primary btn-lg" @click="getAides($event)" >Voir les aides auxquelles je suis éligible</button>
       </div>
       <div class="col-2 mt-2">
-        <button type="button" class="btn btn-primary" v-on:click="step -= 1" >Previous step</button>
+        <button type="button" class="btn btn-primary" v-on:click="step -= 1">Etape précédente</button>
       </div>
       <div v-for="aide in aidesPossibles" class="col-4 mt-3">
         <div class="card mx-auto" style="width: 18rem;">
@@ -258,7 +258,6 @@ export default {
     cityChange(event) {
       event.preventDefault()
       var city = this.form.city;
-      console.log(city);
       axios.get('https://api-adresse.data.gouv.fr/search/?q=' + city + '&limit=15', {
       }).then(resp => {
         var i = resp.data.features;
