@@ -21,17 +21,6 @@ Meteor.methods({
     if (form.personnesACharge == "Non") {
       findOptions.personnesAChargeNeeded = { $ne: "Oui"}
     }
-    console.log(findOptions);
     return Aides.find(findOptions).fetch();
   },
 });
-
-// "name": "test1",
-// "ageNeeded": 20,
-// "deptNeeded": [],
-// "montant": 30000,
-// "statutNeeded": ["salarié","indépendant","fonctionnaire"],
-// "personnesAChargeNeeded": "Oui",
-// "revenuMax": 20000,
-// "transportToWork": "Oui",
-// "kmToWork": 50

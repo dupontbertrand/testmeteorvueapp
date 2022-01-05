@@ -2,16 +2,16 @@
   <div class="container py-5">
     <div class="row mt-2">
       <div class="col-4 text-center">
-        <h4 class="title-progress" v-bind:class="{ 'active' : step == 1}">1. Informations personnelles</h4>
+        <h4 class="title-progress" v-bind:class="{ 'active' : step > 0}">1. Informations personnelles</h4>
       </div>
       <div class="col-4 text-center">
-        <h4 class="title-progress" v-bind:class="{ 'active' : step == 2}">2. Informations professionnelles</h4>
+        <h4 class="title-progress" v-bind:class="{ 'active' : step > 1}">2. Informations professionnelles</h4>
       </div>
       <div class="col-4 text-center">
-        <h4 class="title-progress" v-bind:class="{ 'active' : step == 3}">3. Récapitulatif</h4>
+        <h4 class="title-progress" v-bind:class="{ 'active' : step > 2}">3. Récapitulatif</h4>
       </div>
-      {{form}}
-      {{step}}
+      <!-- {{form}}
+      {{step}} -->
     </div>
     <div class="row" id="step_1" v-if="step == 1">
       <div class="form_custom shadow-sm mt-4">
@@ -159,14 +159,19 @@
       </div>
     </div>
     <div class="row" id="step_3" v-if="step == 3">
-      <p>Je suis un(e) <span><img :src="'img/' + form.gender + '.png'" alt="" style="height: 25px;width:auto;"></span> né(e) le <b>{{form.birthdate}}</b> et qui habite à <b>{{form.city}}</b>, je suis un(e) <b>{{form.status}}</b> <span v-if="conditionRevenus(form.status)">et je perçoit <b>{{form.revenu}}€</b> par an</span>.</p>
-      <p v-if="form.personnesACharge == 'Oui'">J'ai à charge <b>{{form.nbreACharge}}</b> personnes.</p>
-      <p v-if="conditionKm(form.status)">J'ai <b>{{form.kmToWork}}km</b> pour me rendre à mon établissement<span v-if="form.transportToWork == 'Oui'">, que je fait en transport en commun</span>.</p>
-      <div class="row">
+      <div class="col-12 my-5 form_custom text-center py-5">
+        <p>Je suis un(e) <span><img :src="'img/' + form.gender + '.png'" alt="" style="height: 25px;width:auto;"></span> né(e) le <b>{{form.birthdate}}</b> et qui habite à <b>{{form.city}}</b>, je suis un(e) <b>{{form.status}}</b> <span v-if="conditionRevenus(form.status)">et je perçoit <b>{{form.revenu}}€</b> par an</span>.</p>
+        <p v-if="form.personnesACharge == 'Oui'">J'ai à charge <b>{{form.nbreACharge}}</b> personnes.</p>
+        <p v-if="conditionKm(form.status)">J'ai <b>{{form.kmToWork}}km</b> pour me rendre à mon établissement<span v-if="form.transportToWork == 'Oui'">, que je fait en transport en commun</span>.</p>
+        <button type="button" class="button btn-primary btn-lg" @click="getAides($event)" >Voir les aides auxquelles je suis éligible</button>
+      </div>
+      <div class="col-2 mt-2">
+        <button type="button" class="btn btn-primary" v-on:click="step -= 1" >Previous step</button>
+      </div>
       <div v-for="aide in aidesPossibles" class="col-4 mt-3">
-        <div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">{{aide.name}}</h5>
+        <div class="card mx-auto" style="width: 18rem;">
+          <div class="card-body p-3">
+            <h5 class="card-title text-center">{{aide.name}}</h5>
             <h6 class="card-subtitle mb-2 text-muted">Montant maximum alloué : {{aide.montant}}€</h6>
             <p class="card-text">{{aide.desc}}</p>
             <p>Age minimum requis : {{aide.ageNeeded}}</p>
@@ -174,15 +179,6 @@
             <p>Obligation d'avoir des personnes à charge pour être éligible: {{aide.personnesAChargeNeeded}}</p>
             <a href="#" class="card-link">En savoir plus</a>
           </div>
-        </div>
-      </div>
-      </div>
-      <div class="col-2 mt-2">
-        <button type="button" class="btn btn-primary" v-on:click="step -= 1" >Previous step</button>
-      </div>
-      <div class="row">
-        <div class="col-4 mx-auto">
-          <button type="button" class="button btn-primary btn-lg" @click="getAides($event)" >Voir les aides auxquelles je suis éligible</button>
         </div>
       </div>
     </div>
@@ -196,31 +192,33 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      step: 3,
-      location: '',
+      step: 1,
       locations: [],
       aidesPossibles: [],
       form: {
-        // gender: '',
-        // birthdate: '',
-        // city: '',
-        // personnesACharge: '',
-        // nbreACharge: '',
-        // status: '',
-        // revenu: '',
-        // transportToWork: '',
-        // kmToWork: ''
-        gender: 'male',
-        birthdate: '1992-12-09',
-        city: 'Aumelas',
-        personnesACharge: 'Non',
-        nbreACharge: '2',
-        status: 'salarié',
-        revenu: '20000',
-        transportToWork: 'Oui',
-        kmToWork: '70'
+        gender: '',
+        birthdate: '',
+        city: '',
+        personnesACharge: '',
+        nbreACharge: '',
+        status: '',
+        revenu: '',
+        transportToWork: '',
+        kmToWork: ''
+        // gender: 'male',
+        // birthdate: '1992-12-09',
+        // city: 'Aumelas',
+        // personnesACharge: 'Non',
+        // nbreACharge: '2',
+        // status: 'salarié',
+        // revenu: '20000',
+        // transportToWork: 'Oui',
+        // kmToWork: '70'
       }
     }
+  },
+  mounted(){
+    this.form.birthdate = '1990-01-01'
   },
   meteor: {
     $subscribe: {
@@ -259,18 +257,15 @@ export default {
     },
     cityChange(event) {
       event.preventDefault()
-      console.log('change');
       var city = this.form.city;
       console.log(city);
       axios.get('https://api-adresse.data.gouv.fr/search/?q=' + city + '&limit=15', {
       }).then(resp => {
-        console.log(resp)
         var i = resp.data.features;
         this.locations = i.map(f => {
           console.log(f);
           if (f.properties.type == "municipality") return f.properties.city;
         })
-        console.log(this.locations);
       }).catch(err => {
         console.log(err)
       })
@@ -282,8 +277,6 @@ export default {
         if (error) {
           alert(error.error)
         } else {
-          console.log('else');
-          console.log(results);
           this.loader = false;
           this.aidesPossibles = results;
         }
@@ -294,23 +287,21 @@ export default {
 </script>
 
 <style scoped>
-  body {
-    background: #f5f4f2;
-  }
 
   .progress {
     border-radius: 10px;
   }
 
   .title-progress {
-    color: #cbe3fd;
+    color: #8ec5fa;
   }
 
   .title-progress.active {
-    color: #5dabf8;
+    color: #339bff;
   }
 
   .form_custom {
+    background: #ffffff;
     border: solid 1px #95c7fa;
     border-radius: 10px;
     padding: 30px 0 30px 0;

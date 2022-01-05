@@ -18,5 +18,6 @@ export default {
   body {
     font-family: sans-serif;
     padding: 10px;
+    background: #f0f0f0;
   }
 </style>
