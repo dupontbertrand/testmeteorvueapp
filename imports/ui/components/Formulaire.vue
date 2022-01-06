@@ -214,29 +214,29 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      step: 3,
+      step: 1,
       locations: [],
       aidesPossibles: [],
       aidesAvailable: true,
       form: {
-        // gender: '',
-        // birthdate: '',
-        // city: '',
-        // personnesACharge: '',
-        // nbreACharge: '',
-        // status: '',
-        // revenu: '',
-        // transportToWork: '',
-        // kmToWork: ''
-        gender: 'male',
-        birthdate: '1992-12-09',
-        city: 'Aumelas',
-        personnesACharge: 'Non',
-        nbreACharge: '2',
-        status: 'salarié',
-        revenu: '200000',
-        transportToWork: 'Oui',
-        kmToWork: '70'
+        gender: '',
+        birthdate: '',
+        city: '',
+        personnesACharge: '',
+        nbreACharge: '',
+        status: '',
+        revenu: '',
+        transportToWork: '',
+        kmToWork: ''
+        // gender: 'male',
+        // birthdate: '1992-12-09',
+        // city: 'Aumelas',
+        // personnesACharge: 'Non',
+        // nbreACharge: '2',
+        // status: 'salarié',
+        // revenu: '200000',
+        // transportToWork: 'Oui',
+        // kmToWork: '70'
       }
     }
   },
