@@ -285,7 +285,6 @@ export default {
       }).then(resp => {
         var i = resp.data.features;
         this.locations = i.map(f => {
-          console.log(f);
           if (f.properties.type == "municipality") return f.properties.city;
         })
       }).catch(err => {
